@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Libro {
     
     private int id;
@@ -15,4 +16,8 @@ public class Libro {
     private String editorial;
     private int fechaPublicacion;
     private String isbn;
+
+
+
 }
+
