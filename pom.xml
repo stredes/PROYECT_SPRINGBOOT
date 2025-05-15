@@ -2,16 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-         
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version> <!-- aquí -->
-        <relativePath/> 
+        <version>3.4.5</version>
+        <relativePath/>
     </parent>
-
 
     <groupId>com.example</groupId>
     <artifactId>biblioecaduoc</artifactId>
@@ -24,16 +23,18 @@
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <!-- Spring Boot Web -->
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Lombok -->
@@ -43,43 +44,46 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Spring Boot Test -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
 
-
-        <!-- Oracle JDBC Driver -->
+        <!-- Oracle JDBC Driver (Java 11+) -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>19.8.0.0</version>
+            <artifactId>ojdbc11</artifactId>
+            <version>21.9.0.0</version>
         </dependency>
 
+        <!-- Oracle Wallet/SSL libraries -->
         <dependency>
             <groupId>com.oracle.database.security</groupId>
             <artifactId>oraclepki</artifactId>
-            <version>19.8.0.0</version>
+            <version>21.9.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.oracle.database.security</groupId>
             <artifactId>osdt_core</artifactId>
-            <version>19.8.0.0</version>
+            <version>21.9.0.0</version>
         </dependency>
-        
         <dependency>
             <groupId>com.oracle.database.security</groupId>
             <artifactId>osdt_cert</artifactId>
-            <version>19.8.0.0</version>
+            <version>21.9.0.0</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <!-- Oracle Maven Repo (requiere login en Oracle Maven o configuración en settings.xml) -->
+        <repository>
+            <id>oracle</id>
+            <name>Oracle Maven Repository</name>
+            <url>https://maven.oracle.com</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -87,30 +91,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
-            <!-- Plugin Spring Boot -->
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
